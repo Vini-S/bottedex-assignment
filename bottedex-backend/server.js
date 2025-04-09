@@ -3,7 +3,6 @@ const NodeCache = require('node-cache');
 const axios = require('axios');
 const cors = require('cors');
 
-// Create an Express app
 const app = express();
 const port = 3000;
 
@@ -24,22 +23,6 @@ function checkCache(req, res, next) {
   next();
 }
 
-// Example route with caching
-app.get('/data', checkCache, (req, res) => {
-  // Simulate a data fetch
-  const fetchedData = {
-    time: new Date().toISOString(),
-    message: 'Fresh data from server!',
-  };
-
-  // Store data in cache
-  cache.set(req.originalUrl, fetchedData);
-
-  res.json({ source: 'server', data: fetchedData });
-});
-
-
-// GET /pokemons?page=1&limit=10
 app.get('/pokemons', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -69,7 +52,7 @@ app.get('/pokemons', async (req, res) => {
     }
   });
 
-// Start the server
+
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);
 });

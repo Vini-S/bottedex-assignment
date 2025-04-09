@@ -7,6 +7,8 @@ function App() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
   const limit = 10;
 
   const fetchPokemons = async (pageNum) => {
@@ -50,25 +52,41 @@ function App() {
     if (node) observer.current.observe(node);
   }, [hasMore]);
 
-
   return (
     <>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '80%', margin: 'auto'}}>
         <h1>Bottedex's Pokémons</h1>
-        <div>
-          {pokemons.map((pokemon, index) => (
 
-            <div className='pokemon-row' key={index}>
+          {pokemons.map((pokemon, index) => (
+            <div className='pokemon-row' key={index} onClick={() => setSelectedPokemon(pokemon)}>
               <img src={pokemon.sprites.other.dream_world.front_default} alt=""/>
               {pokemon.name}
             </div>
           ))}
-        </div>
 
-        {/* This div is the sentinel element that triggers loading the next page */}
+
+        {/* This div is the temporary element that triggers loading the next page */}
         {hasMore && <div ref={lastElementRef} className='loading-div' >Loading more...</div>}
-        {!hasMore && <p style={{ marginTop: '20px' }}>No more Pokémon to load</p>}
       </div>
+
+      { selectedPokemon && (
+        <div className='popup-div' onClick={() => setSelectedPokemon(null)}>
+          <div className='popup-content-div' onClick={e => e.stopPropagation()}>
+            <h2>{selectedPokemon.name}</h2>
+            <img
+              src={selectedPokemon.sprites.other['official-artwork'].front_default}
+              alt={selectedPokemon.name}
+              style={{ width: '150px', height: '150px' }}
+            />
+            <p>Height: {selectedPokemon.height}</p>
+            <p>Weight: {selectedPokemon.weight}</p>
+            <p>Types: {selectedPokemon.types.map(t => t.type.name).join(', ')}</p>
+            <button onClick={() => setSelectedPokemon(null)} style={{ marginTop: '10px' }}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }
