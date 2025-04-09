@@ -5,6 +5,32 @@
   text-align: center;
 }
 
+.loading-div {
+  height: 40px;
+  background: rgb(240, 240, 240);
+  margin-top: 20px;
+  line-height: 38px;
+  color: black;
+}
+
+.pokemon-row {
+  width: 20rem;
+  border: 1px solid;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px;
+  text-transform: capitalize;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.pokemon-row img {
+  width: 100px;
+  height: 100px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
